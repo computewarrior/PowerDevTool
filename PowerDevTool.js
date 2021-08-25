@@ -1,18 +1,18 @@
     // ==UserScript==
     // @name         获取开发平台框架地址
-    // @namespace    http://dev.p3china.com:7608/Scripts/PowerDevTool.js
-    // @version      21.6.12
+    // @namespace    https://github.com/computewarrior/PowerDevTool
+    // @version      21.8.25
     // @description  获取平台地址,使debug更方便
     // @author       程序员战士
     // @include http://*
     // @include https://*
     // @grant GM_setValue
     // @grant GM_getValue
-    //@updateURL     http://dev.p3china.com:7608/Scripts/PowerDevTool.js
+    //@updateURL https://raw.githubusercontent.com/computewarrior/PowerDevTool/master/PowerDevTool.js
     // ==/UserScript==
     // @require      https://cdn.jsdelivr.net/npm/vue/dist/vue.js
     function OpenNew() {
-        console.log(window.location.href);
+       // console.log(window.location.href);
         window.open(window.location.href);
     }
     var config = {
@@ -177,7 +177,7 @@
         'use strict';
         var whiteList = {};
         whiteList = GM_getValue("whiteList");
-        console.log("whiteList", whiteList);
+       // console.log("whiteList", whiteList);
         //绘制按钮
         //https://www.tapd.cn/52973815/bugtrace/bugreports/my_view
         var panelWidth = 220;
@@ -290,11 +290,14 @@
             $(".answerBtn").show();
         //在主页就获取所有iframe框架
         var iframes = document.getElementsByTagName("iframe");
-        console.log("当前页面地址:" + window.location.href);
+       // console.log("当前页面地址:" + window.location.href);
         //debugger;
         if (iframes) {
             if (iframes.length > 0)
-                console.log("iframs");
+            {
+                
+                }
+           //     console.log("iframs");
             //$("#assistantBtn").hide();
         }
         config.path.value = window.location.href;
@@ -402,7 +405,7 @@
                         var res = mini.decode(text);
                         if (res.success) {
                             var data = mini.decode(res.data.value);
-                            console.log("MenuWidget", data);
+                           // console.log("MenuWidget", data);
                             if (data[0].HtmlPath) {
                                 var reg = /(PowerPlat)[\\/](FormXml)/;
                                 var preFix = "\\PowerPlat\\FormXml\\zh-CN\\";
@@ -436,7 +439,7 @@
         $("#getField").click(function () {
             var fieldsInfo = "";
             if (formconfig && formconfig.config && formconfig.config.joindata && formconfig.config.joindata.currow) {
-                console.log("currow",formconfig.config.joindata.currow);
+               // console.log("currow",formconfig.config.joindata.currow);
                 for (var i in formconfig.config.joindata.currow)
                     fieldsInfo += i + "\n";
                 CopyToClipboard(fieldsInfo);
@@ -467,7 +470,7 @@
                         var res = mini.decode(text);
                         if (res.success) {
                             var data = mini.decode(res.data.value);
-                            console.log("MenuWidget", data);
+                           // console.log("MenuWidget", data);
                             if (data[0].HtmlPath) {
                                 var reg = /(PowerPlat)[\\/](FormXml)/;
                                 var preFix = "\\PowerPlat\\FormXml\\zh-CN\\";
