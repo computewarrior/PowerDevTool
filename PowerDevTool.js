@@ -127,7 +127,7 @@
         '<div id="extPanel" style=""><div class="btnGroup">' +
         '<a target="_blank" id="clickBtn" class="extBtn" style=""><i class="icon fa fa-external-link-square"></i>获取开发信息</a>' +
         '<a target="_blank" id="clearBtn" class="extBtn" style=""><i class="icon fa fa-undo"></i>清除权限缓存</a>' +
-        '<a target="_blank" id="tapdBtn" class="extBtn" style="" href="#"><i class="icon fa fa-th-list"></i>前往TAPD</a>' +
+        '<a target="_blank" id="tapdBtn" class="extBtn" style="" href="#"><i class="icon fa fa-th-list"></i>问题反馈</a>' +
         '<a class="extBtn" id="openNewBtn" href="javascript:void(0);"><i class="icon fa fa-crosshairs"></i>新窗口打开</a>' +
         '<a class="extBtn" id="openRaw" href="javascript:void(0);"><i class="icon fa fa-terminal"></i>打开源窗口</a>' +
         '<a id="getField" class="extBtn" style=""><i class="icon fa fa-columns"></i>获取字段信息</a>'+
@@ -194,7 +194,7 @@
         else
             console.warn("程序员助手前端页面未能写入");
 
-        $("#tapdBtn").attr("href", "https://www.tapd.cn/52973815/bugtrace/bugreports/my_view");
+        $("#tapdBtn").attr("href", "https://jq.qq.com/?_wv=1027&k=Qyc2Q4Gd");
         $(".icon").css({
             "color": "#ffffff",
             "margin-right": "5px"
@@ -319,7 +319,7 @@
             config.userCode.value = sessiondata.UserCode;
             config.userName.value = sessiondata.UserName;
             config.epsprojectname.value = sessiondata.EpsProjName;
-            config.Login.value = window.location.host + "/RGYLogin.aspx?Opt=BackDoor&UserCode=" + sessiondata.UserCode;
+            config.Login.value = '这里配置单点登录地址';
         }
 
         $("#clearBtn").click(function () {
@@ -397,7 +397,7 @@
                     swhere: "id='" + config.formid.value + "'"
                 }
                 $.ajax({
-                    url: "/Form/GridPageLoad",
+                    url: "/Form/GridPageLoad", //此接口地址可以改为自定义控制器接口地址返回更多信息
                     data: param,
                     type: 'post',
                     async: false,
@@ -405,7 +405,6 @@
                         var res = mini.decode(text);
                         if (res.success) {
                             var data = mini.decode(res.data.value);
-                           // console.log("MenuWidget", data);
                             if (data[0].HtmlPath) {
                                 var reg = /(PowerPlat)[\\/](FormXml)/;
                                 var preFix = "\\PowerPlat\\FormXml\\zh-CN\\";
@@ -548,7 +547,4 @@
         } else if (formReg.test(url)) {
             return "表单";
         }
-}
-function ReStart() {
-    console.log("触发了重新开始方法");
 }
