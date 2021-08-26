@@ -2,6 +2,10 @@
 
 使用[油猴脚本](https://www.tampermonkey.net/)将自己写的脚本代码注入到网页运行环境, 读取页面js变量代码,关键信息使用ajax共享当前页面的会话调用后台接口获取。
 理论上公司所有用**miniui**的站点, 都能使用助手获取**页面链接,关键词**等开发信息,因为是浏览器注入的方式,和站点隔离,不会对运行中的代码有影响,客户运行环境不会有多余的代码.
+
+![运行效果](/tutorials/3.jpg)
+
+运行效果
 ## 准备安装
 ![油猴](https://tse1-mm.cn.bing.net/th/id/OIP-C.kuyPZC2VpjoE7dDTw5VczQAAAA?pid=ImgDet&rs=1)
 
@@ -17,18 +21,23 @@
 3. 点击右上角 **开发者模式** 开关 
 4. 再点击左上角 "**添加已解压的扩展程序**"
 5. 打开复制的文件夹路径,点击确认
-### 2. 安装自定义脚本
+### 2. 安装PowerDevTool.js(自定义脚本)
 
 点击浏览器扩展栏的油猴脚本图标, ```点击添加新脚本```直接把用```PowerDevTool.js```的内容复制到新建脚本,然后按```Ctrl+S```保存即可.
+
 ![截图1](https://github.com/computewarrior/PowerDevTool/blob/master/tutorials/%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E8%84%9A%E6%9C%AC.gif?raw=true)
+
 打开应用平台查看,右下角出现助手的图标说明安装完成
 ## 功能
-运行效果
-![3](/tutorials/1.jpg)
+
 询问是否运行
+
 ![1](/tutorials/1.jpg)
+
 主菜单页面
-![2](/tutorials/1.jpg)
+
+![2](/tutorials/2.jpg)
+
 ### 源码
 点击会复制当前窗体或表单的地址,而不是外层主菜单地址
 ### 运行
