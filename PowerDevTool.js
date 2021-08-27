@@ -121,7 +121,7 @@
         '<li><button id="notRun" class="fixBtn answerBtn" style="" title="选择关闭后只能控制台调用ReStart按钮重新运行">关闭<i class="icon fa fa-question-circle"></i></button></li>' +
         '<li><button id="ReStart" style="display:none"><i class="icon fa fa-question-circle"></i>重选</button></li>' +
       //  '<li><button id="removeWhiteList" class="fixBtn" style=""><i class="icon fa fa-trash-o "></i>排除</button></li>' +
-        '<li><button id="viewSourceBtn" class="fixBtn" style=""><i class="icon fa fa-code "></i>源码</button></li>' +
+        '<li><button id="viewSourceBtn" class="fixBtn" style=""><i class="icon fa fa-code "></i>打开</button></li>' +
         '<li><button id="copylink" class="fixBtn" style=""><i class="icon fa fa-link "></i>复制</button></li>' +
         '<li><button id="hideTool" class="fixBtn" style=""><i class="icon fa fa-eye-slash "></i>隐藏</button></li></ul>' +
         '<div id="extPanel" style=""><div class="btnGroup">' +
@@ -132,7 +132,7 @@
         '<a class="extBtn" id="openRaw" href="javascript:void(0);"><i class="icon fa fa-terminal"></i>打开源窗口</a>' +
         '<a id="getField" class="extBtn" style=""><i class="icon fa fa-columns"></i>获取字段信息</a>'+
         '<a id="removeWhiteList" class="extBtn" style="" href="#"><i class="icon fa fa-window-close"></i>关闭助手</a>' +
-        '<p style="text-align:center;font-size:12px">Power by 程序员战士</p><div></div>';
+        '<a style="text-align:center;font-size:12px" target="_blank" href="https://github.com/computewarrior/PowerDevTool">Power by 程序员战士</a><div></div>';
     var retText = "",
         retHtml = "";
 
@@ -169,6 +169,50 @@
             Power.ui.info(text)
         } else
             alert(text)
+}
+function loadWidgetData(widgetId,callback) {   
+        var param = {
+            KeyWord: "Widget",
+            KeyWordType: "BO",
+            index: "0",
+            select: "",
+            size: "8",
+            sort: "",
+            swhere: "id='" + widgetId + "'"
+        }
+        $.ajax({
+            url: "/Form/GridPageLoad", //此接口地址可以改为自定义控制器接口地址返回更多信息
+            data: param,
+            type: 'post',
+            async: false,
+            success: function (text) {
+                var res = mini.decode(text);
+                if (res.success) {
+                    var data = mini.decode(res.data.value);
+                    if (data[0].HtmlPath) {
+                        var reg = /(PowerPlat)[\\/](FormXml)/;
+                        var preFix = "\\PowerPlat\\FormXml\\zh-CN\\";
+                        if (reg.test(data[0].HtmlPath))
+                            preFix = "";
+                        var path = preFix + data[0].HtmlPath;
+                        if (data[0].WidgetType == "6") {
+                            config.WidgetType.value = "URL链接";
+                            path = data[0].HtmlPath;
+                        } else
+                            config.WidgetType.value = "静态页面";
+                        if (data[0].bWebForm == "1")
+                            config.Form.value = path;
+                        else
+                            config.Widget.value = path;
+                        if (callback)
+                        {
+                            callback();
+                            }
+                        // config.Widget=data[0].HtmlPath;
+                    }
+                }
+            }
+        })    
     }
     (function () {
         //不是miniui就返回吧
@@ -387,44 +431,9 @@
             else if (config.Widget.value)
                 window.open(config.Widget.value);
             else {
-                var param = {
-                    KeyWord: "Widget",
-                    KeyWordType: "BO",
-                    index: "0",
-                    select: "",
-                    size: "8",
-                    sort: "",
-                    swhere: "id='" + config.formid.value + "'"
-                }
-                $.ajax({
-                    url: "/Form/GridPageLoad", //此接口地址可以改为自定义控制器接口地址返回更多信息
-                    data: param,
-                    type: 'post',
-                    async: false,
-                    success: function (text) {
-                        var res = mini.decode(text);
-                        if (res.success) {
-                            var data = mini.decode(res.data.value);
-                            if (data[0].HtmlPath) {
-                                var reg = /(PowerPlat)[\\/](FormXml)/;
-                                var preFix = "\\PowerPlat\\FormXml\\zh-CN\\";
-                                if (reg.test(data[0].HtmlPath))
-                                    preFix = "";
-                                var path = preFix + data[0].HtmlPath;
-                                if (data[0].WidgetType == "6") {
-                                    config.WidgetType.value = "URL链接";
-                                    path = data[0].HtmlPath;
-                                } else
-                                    config.WidgetType.value = "静态页面";
-                                if (data[0].bWebForm == "1")
-                                    config.Form.value = path;
-                                else
-                                    config.Widget.value = path;
-                                window.open(path);
-                                // config.Widget=data[0].HtmlPath;
-                            }
-                        }
-                    }
+                loadWidgetData(config.formid.value, function () {
+                    var path = config.Form.value || config.Widget.value;
+                    window.open(path);
                 })
             }
         })
@@ -451,45 +460,9 @@
         //console.log("助手的输出", retText);
         $("#clickBtn").click(function () {
             if (config.formid.value) {
-                var param = {
-                    KeyWord: "Widget",
-                    KeyWordType: "BO",
-                    index: "0",
-                    select: "",
-                    size: "8",
-                    sort: "",
-                    swhere: "id='" + config.formid.value + "'"
-                }
-                $.ajax({
-                    url: "/Form/GridPageLoad",
-                    data: param,
-                    type: 'post',
-                    async: false,
-                    success: function (text) {
-                        var res = mini.decode(text);
-                        if (res.success) {
-                            var data = mini.decode(res.data.value);
-                           // console.log("MenuWidget", data);
-                            if (data[0].HtmlPath) {
-                                var reg = /(PowerPlat)[\\/](FormXml)/;
-                                var preFix = "\\PowerPlat\\FormXml\\zh-CN\\";
-                                if (reg.test(data[0].HtmlPath))
-                                    preFix = "";
-                                var path = preFix + data[0].HtmlPath;
-                                if (data[0].WidgetType == "6") {
-                                    config.WidgetType.value = "URL链接";
-                                    path = data[0].HtmlPath;
-                                } else
-                                    config.WidgetType.value = "静态页面";
-                                if (data[0].bWebForm == "1")
-                                    config.Form.value = path;
-                                else
-                                    config.Widget.value = path;
-                                // config.Widget=data[0].HtmlPath;
-                            }
-                        }
-                    }
-                })
+                var path = config.Form.value || config.Widget.value;
+                if(!path)
+                loadWidgetData(config.formid.value);                
             } else
                 alert("窗体Id不存在");
             if (!retText && !retHtml) {
