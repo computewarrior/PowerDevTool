@@ -16,10 +16,11 @@
 运行效果
 ## 准备安装
 ![油猴](https://tse1-mm.cn.bing.net/th/id/OIP-C.kuyPZC2VpjoE7dDTw5VczQAAAA?pid=ImgDet&rs=1)
-###　须知
 
-1. 因为本插件依赖于油猴运行，所以必须安装油猴.
-2. 可以安装油猴脚本的浏览器(chrome，360极速，edge，Safari，Firefox，opera...)均可使用本助手，其他浏览器安装方法可以查阅官网，本安装教程只提供chromium内核的浏览器crx格式的油猴拓展安装.
+### 须知
+
+1. 因为本插件依赖于油猴运行，所以必须安装油猴。
+2. 可以安装油猴脚本的浏览器(chrome，360极速，edge，Safari，Firefox，opera...)均可使用本助手，其他浏览器安装方法可以查阅官网，本安装教程只提供chromium内核的浏览器crx格式的油猴拓展安装。
 ### 1. 安装油猴
 #### 1.1 在线安装
 科学上网的用户可以直接[官网下载](https://www.tampermonkey.net/)，跳转到谷歌官方扩展商店下载安装。
@@ -33,8 +34,8 @@
 ### 2. 安装PowerDevTool.js(自定义脚本)
 
 1. 点击浏览器扩展栏的油猴脚本图标。
-2. 点击```添加新脚本```
-3. 用```PowerDevTool.js```的内容复制替换到新建脚本
+2. 点击```添加新脚本```。
+3. 用```PowerDevTool.js```的内容复制替换到新建脚本。
 4. 按```Ctrl+S```快捷键保存。
 
 ![截图1](https://github.com/computewarrior/PowerDevTool/blob/master/tutorials/%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E8%84%9A%E6%9C%AC.gif?raw=true)
@@ -89,8 +90,10 @@
 助手运行后需要排除网站，点击关闭助手功能，然后再点关闭，可以排除当前站点，需要重新运行需参考[运行](#运行)的介绍。
 ## 获取链接
 ## 自己配置控制器获取更多信息
-项目控制器配置参考[帮助平台关于控制器的配置](https://www.yuque.com/haishan-p9cvk/cb4yeb/lg31bt)
 
+***以下为高级功能,需要开发基础的同事进行配置自定义返回***
+
+项目控制器配置参考[帮助平台关于控制器的配置](https://www.yuque.com/haishan-p9cvk/cb4yeb/lg31bt)
 可以使用 **/控制器别名/GetWidgetAndMenu/{widgetid}** 替换 */Form/GridPageLoad* 接口获取数据(本接口使用redis缓存窗体菜单数据，不用担心性能，清除缓存可以调用 */控制器别名/ClearJsonCache* )。
 
 示例
@@ -318,7 +321,7 @@ namespace Models
 
 返回数据示例
 
-```json
+```javascript
 {
     "success": true，
     "message": "获取对应关系"，

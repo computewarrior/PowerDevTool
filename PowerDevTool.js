@@ -170,6 +170,7 @@
         } else
             alert(text)
 }
+//这个方法配置自定义返回,从接口给模板对象赋值
 function loadWidgetData(widgetId,callback) {   
         var param = {
             KeyWord: "Widget",
@@ -181,7 +182,7 @@ function loadWidgetData(widgetId,callback) {
             swhere: "id='" + widgetId + "'"
         }
         $.ajax({
-            url: "/Form/GridPageLoad", //此接口地址可以改为自定义控制器接口地址返回更多信息
+            url: "/Form/GridPageLoad", //此接口地址可以改为自定义控制器接口地址返回更多信息,然后赋值给模板对象
             data: param,
             type: 'post',
             async: false,
