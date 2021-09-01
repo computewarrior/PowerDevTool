@@ -28,7 +28,8 @@
 ![截图1](https://github.com/computewarrior/PowerDevTool/blob/master/tutorials/%E6%B7%BB%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E8%84%9A%E6%9C%AC.gif?raw=true)
 
 安装完成
-### 简介
+
+## 简介
 
 [如何看HTML页面在哪个位置？](https://www.yuque.com/haishan-p9cvk/cb4yeb/gg9ahm)参考帮助平台获取页面地址很麻烦，还需要数据库连接和使用sql，开发这个插件获取开发信息。
 
