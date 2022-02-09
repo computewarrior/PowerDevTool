@@ -1,7 +1,7 @@
     // ==UserScript==
     // @name         获取开发平台框架地址
     // @namespace    https://github.com/computewarrior/PowerDevTool
-    // @version      21.11.18
+    // @version      22.2.9
     // @description  获取平台地址,使debug更方便
     // @author       程序员战士
     // @include http://*
@@ -131,6 +131,7 @@
          '<a class="extBtn" id="openNewBtn" href="javascript:void(0);"><i class="icon fa fa-crosshairs"></i>新窗口打开</a>' +
          '<a class="extBtn" id="openRaw" href="javascript:void(0);"><i class="icon fa fa-terminal"></i>打开源窗口</a>' +
          '<a id="getField" class="extBtn" style=""><i class="icon fa fa-columns"></i>获取字段信息</a>'+
+         '<a id="ignoreRight" class="extBtn" style=""><i class="icon fa fa-unlock"></i>忽略权限</a>'+
          '<a id="removeWhiteList" class="extBtn" style="" href="#"><i class="icon fa fa-window-close"></i>关闭助手</a>' +
          '<a style="text-align:center;font-size:12px" target="_blank" href="https://github.com/computewarrior/PowerDevTool">Power by 程序员战士</a><div></div>';
      var retText = "",
@@ -464,6 +465,12 @@
          })
  
          //console.log("助手的输出", retText);
+         $("#ignoreRight").click(function(){
+             var grid=mini.get(formconfig.config.joindata.KeyWord);
+             grid.setUrl('/Form/GridPageLoadEx');
+             Power.ui.success("忽略权限成功!");
+             grid.reload();
+         })
          $("#clickBtn").click(function () {
              if (config.formid.value) {
                  var path = config.Form.value || config.Widget.value;
