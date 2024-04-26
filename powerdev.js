@@ -15,6 +15,8 @@ var userName;
 var epsProjName;
 var formId;
 var htmlPath;
+var url;
+var keyword;
 var token;
 function doCopy(e) {
     e.clipboardData.setData('text/plain', retText);
@@ -47,11 +49,10 @@ function ExtShow(text) {
     } else
         alert(text)
 }
-function getHtmlPath(widgetId, callback){
-    if(htmlPath)
-    {
+function getHtmlPath(widgetId, callback) {
+    if (htmlPath) {
         callback(htmlPath);
-        return;
+        return htmlPath;
     }
     var param = {
         KeyWord: "Widget",
@@ -67,86 +68,110 @@ function getHtmlPath(widgetId, callback){
         url: "/Form/GridPageLoad", //此接口地址可以改为自定义控制器接口地址返回更多信息,然后赋值给模板对象
         data: param,
         type: 'post',
-        //async: false,
+        async: false,
         success: function (text) {
             var res = mini.decode(text);
             if (res.success) {
                 var data = mini.decode(res.data.value);
-                if (data.length>0&&data[0].HtmlPath) {
+                if (data.length > 0 && data[0].HtmlPath) {
                     htmlPath = data[0].HtmlPath;
                     // config.Widget=data[0].HtmlPath;
                 }
-                callback(htmlPath);
+                if (callback)
+                    callback(htmlPath);
             }
         }
     })
+    return htmlPath;
 }
 function getDateString() {
     var dt = new Date();
-    var month = (dt.getMonth() + 1).toString().padStart(2,"0");
+    var month = (dt.getMonth() + 1).toString().padStart(2, "0");
     var date = dt.getDate().toString().padStart(2, "0");
     return dt.getFullYear() + month + date;
 }
 
-function openRawHtml(){
-    if(!formId)
-    {
+function openRawHtml() {
+    if (!formId) {
         ExtShow("FormId获取失败");
         return;
     }
-    getHtmlPath(formId, function(path){
-        if(path)
-        {
-        console.log("html", path)
-        ExtShow("获取成功");
-        window.location.href=path;
+    getHtmlPath(formId, function (path) {
+        if (path) {
+            console.log("html", path)
+            ExtShow("获取成功");
+            window.open(path);
         }
         else
-        ExtShow("获取失败!");
+            ExtShow("获取失败!");
     })
 }
-function openNewWindow(){
+function openNewWindow() {
     console.log("click", window.location.href)
     window.open(window.location.href);
 }
-function menuClick(e){
+function menuClick(e) {
     console.log("click openNewWindow")
 }
-function getDevInfo(){
+function getDevInfo() {
     console.log("getDevInfo Inner")
+    var cvInfo = "";
+    if (userCode) {
+        cvInfo += "用户名:" + userName + "(" + userCode + ")\n"
+    }
+    if (epsProjName)
+        cvInfo += "所在层级:" + epsProjName + "\n";
+    if (keyword)
+        cvInfo += "关键词:" + keyword + "\n";
+    cvInfo += "页面地址:" + url + "\n";
+    if (formId) {
+        cvInfo += "页面Id:" + formId + "\n";
+        let localPath = getHtmlPath(formId, null);
+        cvInfo += "页面路径:" + localPath + "\n";
+    }
+    CopyToClipboard(cvInfo);
+    ExtShow("复制成功");
 }
 (function () {
-    function menuClick(e){
+    function menuClick(e) {
         console.log("click openNewWindow")
     }
     'use strict';
+    url = window.location.href;
     var btns = document.getElementsByClassName("captiontools");
-    if(btns&&btns.length>0){
+    if (btns.length == 0) {
+        btns = document.getElementsByClassName("caption");
+    }
+    if (btns.length > 0) {
         const supportBtn = document.createElement("ul");
-        supportBtn.setAttribute("class","mini-menubar");
+        supportBtn.setAttribute("class", "mini-menubar");
         //supportBtn.setAttribute("onitemclick","menuClick")
-        supportBtn.setAttribute("style","float:right;margin-left:10px;");
+        supportBtn.setAttribute("style", "float:right;margin-left:10px;");
         //supportBtn.appendChild(icon);
-        supportBtn.innerHTML="<li><span>dev tool</span>"+
-		"<ul>"+
-        "<li id=\"getDevInfo\"><i class=\"icon fa fa-external-link-square\"></i>获取开发信息</li>"+        
-        "<li class=\"separator\"></li>"+
-        "<li id=\"openNewWindow\"><i class=\"fa fa-code\"></i>新窗口打开</li>"+
-        "<li id=\"openRawHtml\"><i class=\"icon fa fa-terminal\"></i>打开源窗口</li>"+
-        "<li id=\"getformdata\"><i class=\"icon fa fa-columns\"></i>获取字段信息</li>"+
-        "<li id=\"gettoken\"><i class=\"icon fa fa-columns\"></i>获取token</li>"+
-		"</ul></li>";
+        supportBtn.innerHTML = "<li><span><i class=\"fa fa-diamond\"></i>dev tool</span>" +
+            "<ul>" +
+            "<li id=\"getDevInfo\"><i class=\"icon fa fa-external-link-square\"></i>获取开发信息</li>" +
+            "<li class=\"separator\"></li>" +
+            "<li id=\"openNewWindow\"><i class=\"fa fa-code\"></i>新窗口打开</li>" +
+            "<li id=\"openRawHtml\"><i class=\"icon fa fa-terminal\"></i>打开源窗口</li>" +
+            "<li id=\"getformdata\"><i class=\"icon fa fa-columns\"></i>获取字段信息</li>" +
+            "<li id=\"gettoken\"><i class=\"icon fa fa-columns\"></i>获取token</li>" +
+            "</ul></li>";
         btns[0].appendChild(supportBtn);
         mini.parse();
     }
-    if(sessiondata){
+    else
+        return;
+    if (sessiondata) {
         userCode = sessiondata.UserCode;
         userName = sessiondata.UserName;
         epsProjName = sessiondata.EpsProjName
     }
-    if(typeof(FormId)!='undefined')
-    {
-        formId = FormId||getParameter("FormId");
+    if (typeof (FormId) != 'undefined') {
+        formId = FormId || getParameter("FormId");
+    }
+    if(typeof(KeyWord)!= 'undefined'){
+        keyword =KeyWord;
     }
     $("#openNewWindow").click(function () {
         console.log("click openNewWindow")
@@ -160,13 +185,13 @@ function getDevInfo(){
         console.log("#getDevInfo click")
         getDevInfo();
     })
-    $("#gettoken").click(function(){
-        var reg=/_TOKEN=(\S+);/
-        var matches=document.cookie.match(reg);
-        if(matches.length==2)
-        token=matches[1];
+    $("#gettoken").click(function () {
+        var reg = /_TOKEN=(\S+);/
+        var matches = document.cookie.match(reg);
+        if (matches.length == 2)
+            token = matches[1];
         else
-        ExtShow("获取失败!");
+            ExtShow("获取失败!");
         console.log("token", token);
         CopyToClipboard(token);
         ExtShow("复制成功");
